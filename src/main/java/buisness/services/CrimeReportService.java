@@ -13,13 +13,13 @@ public class CrimeReportService {
         this.crimeReportRepository = crimeReportRepository;
     }
 
-    public CrimeReport createCrimeReport(String description, Location location, Category category, Citizen citizen, Evidence evidence) {
+    public CrimeReport createCrimeReport(String description, Location location, CaseCategory category, Citizen citizen, Evidence evidence) {
         CrimeReport report = new CrimeReport(description, location, category, citizen, evidence);
         crimeReportRepository.save(report);
         return report;
     }
 
-    public CrimeReport createCrimeReportAnonymously(String description, Location location, Category category, Evidence evidence) {
+    public CrimeReport createCrimeReportAnonymously(String description, Location location, CaseCategory category, Evidence evidence) {
         CrimeReport report = new CrimeReport(description, location, category, evidence);
         crimeReportRepository.save(report);
         return report;

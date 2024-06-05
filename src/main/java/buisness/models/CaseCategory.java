@@ -1,8 +1,9 @@
 package buisness.models;
 
-public enum Category {
+public enum CaseCategory {
     THEFT,
     ASSAULT,
     VANDALISM,
-    RAPE
+    RAPE,
+    OTHERS
 }

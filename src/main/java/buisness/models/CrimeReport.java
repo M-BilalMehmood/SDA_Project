@@ -7,12 +7,12 @@ public class CrimeReport {
     private String description; // Detailed description of the incident
     private Location location; // Location of the incident (consider using a separate Location class)
     private LocalDateTime dateTime; // Date and time of the incident
-    private Category category; // Category of the crime (e.g., theft, assault, vandalism)
+    private CaseCategory category; // Category of the crime (e.g., theft, assault, vandalism)
     private Citizen reporter; // Citizen who reported the crime (optional if anonymous reporting is allowed)
     private Evidence evidence; // Associated evidence with the report (e.g., photos, videos)
     private String status; // Current status of the report (e.g., "New", "In Progress", "Closed")
 
-    public CrimeReport(int incidentId, String description, Location location, LocalDateTime dateTime, Category category, Citizen reporter, Evidence evidence, String status) {
+    public CrimeReport(int incidentId, String description, Location location, LocalDateTime dateTime, CaseCategory category, Citizen reporter, Evidence evidence, String status) {
         this.incidentId = incidentId;
         this.description = description;
         this.location = location;
@@ -26,7 +26,7 @@ public class CrimeReport {
     public CrimeReport() {
     }
 
-    public CrimeReport(String description, Location location, Category category, Citizen citizen, Evidence evidence) {
+    public CrimeReport(String description, Location location, CaseCategory category, Citizen citizen, Evidence evidence) {
         this.description = description;
         this.location = location;
         this.category = category;
@@ -34,7 +34,7 @@ public class CrimeReport {
         this.evidence = evidence;
     }
 
-    public CrimeReport(String description, Location location, Category category, Evidence evidence) {
+    public CrimeReport(String description, Location location, CaseCategory category, Evidence evidence) {
         this.description = description;
         this.location = location;
         this.category = category;
@@ -74,11 +74,11 @@ public class CrimeReport {
         this.dateTime = dateTime;
     }
 
-    public Category getCategory() {
+    public CaseCategory getCategory() {
         return category;
     }
 
-    public void setCategory(Category category) {
+    public void setCategory(CaseCategory category) {
         this.category = category;
     }
 
@@ -134,7 +134,7 @@ public class CrimeReport {
         this.location = newLocation;
     }
 
-    public void updateCategory(Category newCategory) {
+    public void updateCategory(CaseCategory newCategory) {
         this.category = newCategory;
     }
 
@@ -154,7 +154,7 @@ public class CrimeReport {
         this.status = "In Progress";
     }
 
-    public void updateReport(int incidentId, String description, Location location, LocalDateTime dateTime, Category category, Citizen reporter, Evidence evidence, String status) {
+    public void updateReport(int incidentId, String description, Location location, LocalDateTime dateTime, CaseCategory category, Citizen reporter, Evidence evidence, String status) {
         this.incidentId = incidentId;
         this.description = description;
         this.location = location;
