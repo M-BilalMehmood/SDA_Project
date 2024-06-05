@@ -23,6 +23,9 @@ public class CrimeReport {
         this.status = status;
     }
 
+    public CrimeReport() {
+    }
+
     public int getIncidentId() {
         return incidentId;
     }

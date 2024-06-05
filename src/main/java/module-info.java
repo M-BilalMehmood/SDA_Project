@@ -10,6 +10,7 @@ module cbcrs.sda_project {
     requires org.kordamp.bootstrapfx.core;
     requires eu.hansolo.tilesfx;
     requires com.almasb.fxgl.all;
+    requires java.sql;
 
     opens cbcrs.presentation to javafx.fxml;
     exports cbcrs.presentation;
