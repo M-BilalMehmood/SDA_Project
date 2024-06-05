@@ -27,7 +27,7 @@ public class Witness {
         return name;
     }
 
-    public String getContactInformation() {
+    public ContactInformation getContactInformation() {
         return contactInformation;
     }
 
@@ -44,7 +44,7 @@ public class Witness {
         this.name = name;
     }
 
-    public void setContactInformation(String contactInformation) {
+    public void setContactInformation(ContactInformation contactInformation) {
         this.contactInformation = contactInformation;
     }
 

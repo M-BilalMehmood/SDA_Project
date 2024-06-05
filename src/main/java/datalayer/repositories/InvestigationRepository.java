@@ -99,4 +99,36 @@ public class InvestigationRepository {
             System.err.println("Error deleting investigation: " + e.getMessage());
         }
     }
+
+    public Investigation findById(int investigationId) {
+        String sql = "SELECT * FROM investigations WHERE investigation_id = ?";
+        Investigation investigation = null;
+
+        try (Connection conn = DriverManager.getConnection(url, user, password);
+             PreparedStatement pstmt = conn.prepareStatement(sql)) {
+
+            pstmt.setInt(1, investigationId);
+
+            try (ResultSet rs = pstmt.executeQuery()) {
+                if (rs.next()) {
+                    investigation = new Investigation();
+                    investigation.setInvestigationId(rs.getInt("investigation_id"));
+                    investigation.setStatus(rs.getString("status"));
+
+                    int caseId = rs.getInt("case_id");
+                    Case crimeCase = new CaseRepository().findById(caseId); // Fetch Case using its repository
+                    investigation.setCrimeCase(crimeCase);
+
+                    // Retrieve assigned officer (User)
+                    String assignedOfficerUsername = rs.getString("assigned_officer_username");
+                    CaseOfficer assignedOfficer = new UserRepository().findOfficerByUsername(assignedOfficerUsername); // Fetch User
+                    investigation.setAssignedOfficer(assignedOfficer);
+                }
+            }
+        } catch (SQLException e) {
+            System.err.println("Error finding investigation: " + e.getMessage());
+        }
+
+        return investigation;
+    }
 }

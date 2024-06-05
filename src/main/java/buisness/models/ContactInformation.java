@@ -13,6 +13,10 @@ public class ContactInformation {
         this.address = address;
     }
 
+    public ContactInformation() {
+
+    }
+
     // Getters
     public String getEmail() {
         return email;
@@ -37,5 +41,13 @@ public class ContactInformation {
 
     public void setAddress(String address) {
         this.address = address;
+    }
+
+    public void setEmailAddress(String emailAddress) {
+        this.email = emailAddress;
+    }
+
+    public String getEmailAddress() {
+        return email;
     }
 }

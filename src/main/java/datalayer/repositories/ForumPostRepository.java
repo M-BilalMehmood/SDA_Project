@@ -1,6 +1,10 @@
 package datalayer.repositories;
 import java.sql.*;
+import java.util.ArrayList;
+import java.util.List;
+
 import buisness.models.ForumPost;
+import buisness.models.User;
 
 public class ForumPostRepository {
 
@@ -55,8 +59,8 @@ public class ForumPostRepository {
                     String authorUsername = rs.getString("author_username");
                     // You'll need to fetch the User object from the database using authorUsername
                     // For example:
-                    // User author = new UserRepositoryImpl().findByUsername(authorUsername);
-                    // post.setAuthor(author);
+                    User author = new UserRepository().findByUsername(authorUsername);
+                    post.setAuthor(author);
 
                     // ... (Set other attributes like category and timestamp)
                 }
@@ -68,7 +72,6 @@ public class ForumPostRepository {
         return post;
     }
 
-    @Override
     public List<ForumPost> findAll() {
         String sql = "SELECT * FROM forum_posts";
         List<ForumPost> posts = new ArrayList<>();

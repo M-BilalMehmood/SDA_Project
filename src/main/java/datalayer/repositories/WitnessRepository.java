@@ -1,6 +1,7 @@
 package datalayer.repositories;
 
 import buisness.models.Case;
+import buisness.models.ContactInformation;
 import buisness.models.Witness;
 
 import java.sql.*;
@@ -21,8 +22,9 @@ public class WitnessRepository {
              PreparedStatement pstmt = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
 
             pstmt.setString(1, witness.getName());
-            pstmt.setString(2, witness.getContactInformation()); // Assuming contactInformation is a String
-            pstmt.setInt(3, witness.getCrimeCase().getCaseId()); // Assuming you have the Case object
+            pstmt.setString(2, witness.getContactInformation().getPhoneNumber());
+            pstmt.setString(3, witness.getContactInformation().getEmailAddress());
+            pstmt.setInt(3, witness.getCrimeCase().getCaseId());
 
             int affectedRows = pstmt.executeUpdate();
 
@@ -52,7 +54,12 @@ public class WitnessRepository {
                     witness = new Witness();
                     witness.setWitnessId(rs.getInt("witness_id"));
                     witness.setName(rs.getString("name"));
-                    witness.setContactInformation(rs.getString("contact_information"));
+
+                    // Create ContactInformation object
+                    ContactInformation contactInfo = new ContactInformation();
+                    contactInfo.setPhoneNumber(rs.getString("phone_number"));
+                    contactInfo.setEmailAddress(rs.getString("email_address"));
+                    witness.setContactInformation(contactInfo);
 
                     // Retrieve associated Case (if needed)
                     int caseId = rs.getInt("case_id");
@@ -81,7 +88,12 @@ public class WitnessRepository {
                 Witness witness = new Witness();
                 witness.setWitnessId(rs.getInt("witness_id"));
                 witness.setName(rs.getString("name"));
-                witness.setContactInformation(rs.getString("contact_information"));
+
+                // Create ContactInformation object
+                ContactInformation contactInfo = new ContactInformation();
+                contactInfo.setPhoneNumber(rs.getString("phone_number"));
+                contactInfo.setEmailAddress(rs.getString("email_address"));
+                witness.setContactInformation(contactInfo);
 
                 // Retrieve associated Case (if needed)
                 // ... (similar to findById method)
@@ -103,8 +115,9 @@ public class WitnessRepository {
              PreparedStatement pstmt = conn.prepareStatement(sql)) {
 
             pstmt.setString(1, witness.getName());
-            pstmt.setString(2, witness.getContactInformation());
-            pstmt.setInt(3, witness.getCrimeCase().getCaseId()); // Assuming you have the Case object
+            pstmt.setString(2, witness.getContactInformation().getPhoneNumber());
+            pstmt.setString(3, witness.getContactInformation().getEmailAddress());
+            pstmt.setInt(3, witness.getCrimeCase().getCaseId());
             pstmt.setInt(4, witness.getWitnessId());
 
             pstmt.executeUpdate();

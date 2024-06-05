@@ -1,9 +1,5 @@
 package datalayer.repositories;
 import buisness.models.*;
-import datalayer.jdbc.CrimeReportRepositoryImpl;
-import datalayer.jdbc.InvestigationRepositoryImpl;
-import datalayer.jdbc.UserRepositoryImpl;
-import datalayer.jdbc.WitnessRepositoryImpl;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -79,23 +75,23 @@ public class CaseRepository {
 
                     // Retrieve associated objects (CrimeReport, CaseOfficer, etc.)
                     int crimeReportId = rs.getInt("crime_report_id");
-                    CrimeReport crimeReport = new CrimeReportRepositoryImpl().findById(crimeReportId); // Fetch CrimeReport
+                    CrimeReport crimeReport = new CrimeReportRepository().findById(crimeReportId); // Fetch CrimeReport
                     crimeCase.setCrimeReport(crimeReport);
 
                     String caseOfficerUsername = rs.getString("case_officer_username");
-                    User caseOfficer = new UserRepositoryImpl().findByUsername(caseOfficerUsername); // Fetch CaseOfficer
+                    User caseOfficer = new UserRepository().findByUsername(caseOfficerUsername); // Fetch CaseOfficer
                     crimeCase.setCaseOfficer((CaseOfficer) caseOfficer); // Assuming CaseOfficer is a User subclass
 
                     int witnessId = rs.getInt("witness_id");
                     if (witnessId != 0) { // Assuming 0 means no witness is associated
-                        Witness witness = new WitnessRepositoryImpl().findById(witnessId);
+                        Witness witness = new WitnessRepository().findById(witnessId);
                         crimeCase.setWitness(witness);
                     }
 
                     // Fetch and set Investigation
                     int investigationId = rs.getInt("investigation_id");
                     if (investigationId != 0) { // Assuming 0 means no investigation is associated
-                        Investigation investigation = new InvestigationRepositoryImpl().findById(investigationId);
+                        Investigation investigation = new InvestigationRepository().findById(investigationId);
                         crimeCase.setInvestigation(investigation);
                     }
 
@@ -124,22 +120,22 @@ public class CaseRepository {
 
                 // Retrieve associated objects
                 int crimeReportId = rs.getInt("crime_report_id");
-                CrimeReport crimeReport = new CrimeReportRepositoryImpl().findById(crimeReportId);
+                CrimeReport crimeReport = new CrimeReportRepository().findById(crimeReportId);
                 crimeCase.setCrimeReport(crimeReport);
 
                 String caseOfficerUsername = rs.getString("case_officer_username");
-                User caseOfficer = new UserRepositoryImpl().findByUsername(caseOfficerUsername);
+                User caseOfficer = new UserRepository().findByUsername(caseOfficerUsername);
                 crimeCase.setCaseOfficer((CaseOfficer) caseOfficer);
 
                 int witnessId = rs.getInt("witness_id");
                 if (witnessId != 0) {
-                    Witness witness = new WitnessRepositoryImpl().findById(witnessId);
+                    Witness witness = new WitnessRepository().findById(witnessId);
                     crimeCase.setWitness(witness);
                 }
 
                 int investigationId = rs.getInt("investigation_id");
                 if (investigationId != 0) {
-                    Investigation investigation = new InvestigationRepositoryImpl().findById(investigationId);
+                    Investigation investigation = new InvestigationRepository().findById(investigationId);
                     crimeCase.setInvestigation(investigation);
                 }
 
