@@ -13,17 +13,21 @@ public class WitnessRepository {
     private final String url = "jdbc:mysql://localhost:3306/sda_proj";
     private final String user = "root";
     private final String password = "root";
+    private final ContactInformationRepository contactInformationRepository = new ContactInformationRepository();
 
     public void save(Witness witness) {
-        String sql = "INSERT INTO witnesses (name, contact_information, case_id) " +
-                "VALUES (?, ?, ?)";
+        // 1. Save ContactInformation first
+        ContactInformation contactInfo = witness.getContactInformation();
+        contactInformationRepository.save(contactInfo);
+
+        // 2. Now save the Witness
+        String sql = "INSERT INTO witnesses (name, contact_id, case_id) " +
+                "VALUES (?, LAST_INSERT_ID(), ?)";
 
         try (Connection conn = DriverManager.getConnection(url, user, password);
              PreparedStatement pstmt = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
 
             pstmt.setString(1, witness.getName());
-            pstmt.setString(2, witness.getContactInformation().getPhoneNumber());
-            pstmt.setString(3, witness.getContactInformation().getEmailAddress());
             pstmt.setInt(3, witness.getCrimeCase().getCaseId());
 
             int affectedRows = pstmt.executeUpdate();
@@ -41,7 +45,10 @@ public class WitnessRepository {
     }
 
     public Witness findById(int witnessId) {
-        String sql = "SELECT * FROM witnesses WHERE witness_id = ?";
+        String sql = "SELECT w.witness_id, w.name, w.case_id, ci.phone_number, ci.email_address " +
+                "FROM witnesses w " +
+                "INNER JOIN contact_information ci ON w.contact_id = ci.contact_id " +
+                "WHERE w.witness_id = ?";
         Witness witness = null;
 
         try (Connection conn = DriverManager.getConnection(url, user, password);
@@ -63,8 +70,6 @@ public class WitnessRepository {
 
                     // Retrieve associated Case (if needed)
                     int caseId = rs.getInt("case_id");
-                    // You might need to fetch the Case from the database using caseId
-                    // For example:
                     Case crimeCase = new CaseRepository().findById(caseId);
                     witness.setCrimeCase(crimeCase);
                 }

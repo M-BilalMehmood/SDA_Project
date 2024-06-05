@@ -1,6 +1,7 @@
 package buisness.models;
 
 public class ContactInformation {
+    private int contactId;
     private String email;
     private String phoneNumber;
     private String address; // Full postal address
@@ -8,6 +9,7 @@ public class ContactInformation {
     // Constructors, Getters, and Setters
 
     public ContactInformation(String email, String phoneNumber, String address) {
+
         this.email = email;
         this.phoneNumber = phoneNumber;
         this.address = address;
