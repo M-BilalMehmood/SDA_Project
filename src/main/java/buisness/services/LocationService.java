@@ -1,5 +1,7 @@
 package buisness.services;
 
+import buisness.models.Location;
+
 public class LocationService {
     public Location getCurrentLocation() {
         // Logic to get current location using GPS or other methods

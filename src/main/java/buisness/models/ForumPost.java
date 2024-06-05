@@ -27,6 +27,14 @@ public class ForumPost {
         this.timestamp = timestamp;
     }
 
+    public ForumPost(String title, String content, User author, ForumCategory category) {
+        this.title = title;
+        this.content = content;
+        this.author = author;
+        this.category = category;
+        this.timestamp = LocalDateTime.now();
+    }
+
     // Getters
     public int getPostId() {
         return postId;

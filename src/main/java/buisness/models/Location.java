@@ -16,6 +16,11 @@ public class Location {
         this.address = address;
     }
 
+    public Location(double v, double v1) {
+        this.latitude = v;
+        this.longitude = v1;
+    }
+
     // Getters
     public double getLatitude() {
         return latitude;

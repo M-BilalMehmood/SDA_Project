@@ -1,5 +1,9 @@
 package buisness.services;
 
+import buisness.models.CrimeReport;
+import buisness.models.Evidence;
+import datalayer.repositories.EvidenceRepository;
+
 // EvidenceService.java
 public class EvidenceService {
     private EvidenceRepository evidenceRepository;

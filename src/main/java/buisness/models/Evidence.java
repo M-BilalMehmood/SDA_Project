@@ -18,6 +18,12 @@ public class Evidence {
         this.incident = incident;
     }
 
+    public Evidence(String description, String filePath, CrimeReport incident) {
+        this.description = description;
+        this.filePath = filePath;
+        this.incident = incident;
+    }
+
     // Getters
     public int getEvidenceId() {
         return evidenceId;

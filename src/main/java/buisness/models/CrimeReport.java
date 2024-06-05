@@ -26,6 +26,22 @@ public class CrimeReport {
     public CrimeReport() {
     }
 
+    public CrimeReport(String description, Location location, Category category, Citizen citizen, Evidence evidence) {
+        this.description = description;
+        this.location = location;
+        this.category = category;
+        this.reporter = citizen;
+        this.evidence = evidence;
+    }
+
+    public CrimeReport(String description, Location location, Category category, Evidence evidence) {
+        this.description = description;
+        this.location = location;
+        this.category = category;
+        this.evidence = evidence;
+    }
+
+
     public int getIncidentId() {
         return incidentId;
     }

@@ -19,6 +19,13 @@ public class User {
         // Initialize other common attributes here
     }
 
+    public User(String username, String password, UserRole role) {
+        this.username = username;
+        this.password = password;
+        this.role = role;
+        // Initialize other common attributes here
+    }
+
     // Getters
     public String getUsername() {
         return username;

@@ -1,5 +1,10 @@
 package buisness.services;
 
+import buisness.models.ForumCategory;
+import buisness.models.ForumPost;
+import buisness.models.User;
+import datalayer.repositories.ForumPostRepository;
+
 // ForumService.java
 public class ForumService {
     private ForumPostRepository forumPostRepository;

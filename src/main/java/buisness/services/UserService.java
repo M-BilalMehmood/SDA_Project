@@ -1,5 +1,9 @@
 package buisness.services;
 
+import buisness.models.User;
+import buisness.models.UserRole;
+import datalayer.repositories.UserRepository;
+
 public class UserService {
     private UserRepository userRepository;
 

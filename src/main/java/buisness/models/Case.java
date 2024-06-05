@@ -25,6 +25,9 @@ public class Case {
         this.finalRemarks = finalRemarks;
     }
 
+    public Case(CrimeReport crimeReport, CaseOfficer caseOfficer, Witness witness, Investigation investigation) {
+    }
+
     // Getters
     public int getCaseId() {
         return caseId;
@@ -81,5 +84,9 @@ public class Case {
 
     public void setFinalRemarks(String finalRemarks) {
         this.finalRemarks = finalRemarks;
+    }
+
+    public void setCrimeReport(CrimeReport crimeReport) {
+        this.crimeReport = crimeReport;
     }
 }
