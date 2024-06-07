@@ -1,7 +1,6 @@
 package buisness.models;
 
 public class Citizen extends User {
-    // Citizen-specific attributes, if any (e.g., address, community involvement)
     private String address;
     private String communityInvolvement;
 

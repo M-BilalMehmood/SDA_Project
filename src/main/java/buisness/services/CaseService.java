@@ -12,7 +12,7 @@ public class CaseService {
         this.caseRepository = caseRepository;
     }
 
-    public Case createCase(CrimeReport incident, CaseOfficer caseOfficer, Witness witness, Investigation investigation) {
+    public Case createCase(Incident incident, CaseOfficer caseOfficer, Citizen witness, Investigation investigation) {
         Case crimeCase = new Case(incident, caseOfficer, witness, investigation);
         caseRepository.save(crimeCase);
         return crimeCase;

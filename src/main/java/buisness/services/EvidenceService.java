@@ -1,6 +1,6 @@
 package buisness.services;
 
-import buisness.models.CrimeReport;
+import buisness.models.Incident;
 import buisness.models.Evidence;
 import datalayer.repositories.EvidenceRepository;
 
@@ -12,7 +12,7 @@ public class EvidenceService {
         this.evidenceRepository = evidenceRepository;
     }
 
-    public Evidence uploadEvidence(String description, String filePath, CrimeReport incident) {
+    public Evidence uploadEvidence(String description, String filePath, Incident incident) {
         Evidence evidence = new Evidence(description, filePath, incident);
         evidenceRepository.save(evidence);
         return evidence;

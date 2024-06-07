@@ -1,5 +1,5 @@
 package datalayer.repositories;
-import buisness.models.CrimeReport;
+import buisness.models.Incident;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -13,7 +13,7 @@ public class CrimeReportRepository {
 
     // ... (other methods)
 
-    public void save(CrimeReport report) {
+    public void save(Incident report) {
         String sql = "INSERT INTO crime_reports (description, latitude, longitude, dateTime, category, reporter_username, evidence_id, status) " +
                 "VALUES (?, ?, ?, ?, ?, ?, ?, ?)"; // Assuming you have columns for these attributes
 
@@ -46,9 +46,9 @@ public class CrimeReportRepository {
         }
     }
 
-    public CrimeReport findById(int incidentId) {
+    public Incident findById(int incidentId) {
         String sql = "SELECT * FROM crime_reports WHERE incidentId = ?";
-        CrimeReport report = null;
+        Incident report = null;
 
         try (Connection conn = DriverManager.getConnection(url, user, password);
              PreparedStatement pstmt = conn.prepareStatement(sql)) {
@@ -58,7 +58,7 @@ public class CrimeReportRepository {
             try (ResultSet rs = pstmt.executeQuery()) {
                 if (rs.next()) {
                     // Extract data from ResultSet and create CrimeReport object
-                    report = new CrimeReport();
+                    report = new Incident();
                     report.setIncidentId(rs.getInt("incidentId"));
                     // ... set other attributes
                 }
@@ -71,9 +71,9 @@ public class CrimeReportRepository {
         return report;
     }
 
-    public List<CrimeReport> findAll() {
+    public List<Incident> findAll() {
         String sql = "SELECT * FROM crime_reports";
-        List<CrimeReport> reports = new ArrayList<>();
+        List<Incident> reports = new ArrayList<>();
 
         try (Connection conn = DriverManager.getConnection(url, user, password);
              PreparedStatement pstmt = conn.prepareStatement(sql);
@@ -81,7 +81,7 @@ public class CrimeReportRepository {
 
             while (rs.next()) {
                 // Extract data from ResultSet and create CrimeReport objects
-                CrimeReport report = new CrimeReport();
+                Incident report = new Incident();
                 report.setIncidentId(rs.getInt("incidentId"));
                 // ... set other attributes
 
@@ -95,22 +95,22 @@ public class CrimeReportRepository {
         return reports;
     }
 
-    public void update(CrimeReport crimeReport) {
+    public void update(Incident incident) {
         String sql = "UPDATE crime_reports SET description = ?, latitude = ?, longitude = ?, dateTime = ?, category = ?, reporter_username = ?, evidence_id = ?, status = ? WHERE incidentId = ?";
 
         try (Connection conn = DriverManager.getConnection(url, user, password);
              PreparedStatement pstmt = conn.prepareStatement(sql)) {
 
             // Set parameters (adjust column indices if needed)
-            pstmt.setString(1, crimeReport.getDescription());
-            pstmt.setDouble(2, crimeReport.getLocation().getLatitude());
-            pstmt.setDouble(3, crimeReport.getLocation().getLongitude());
-            pstmt.setTimestamp(4, Timestamp.valueOf(crimeReport.getDateTime()));
-            pstmt.setString(5, crimeReport.getCategory().toString());
-            pstmt.setString(6, crimeReport.getReporter() != null ? crimeReport.getReporter().getUsername() : null);
-            pstmt.setInt(7, crimeReport.getEvidence() != null ? crimeReport.getEvidence().getEvidenceId() : 0);
-            pstmt.setString(8, crimeReport.getStatus());
-            pstmt.setInt(9, crimeReport.getIncidentId());
+            pstmt.setString(1, incident.getDescription());
+            pstmt.setDouble(2, incident.getLocation().getLatitude());
+            pstmt.setDouble(3, incident.getLocation().getLongitude());
+            pstmt.setTimestamp(4, Timestamp.valueOf(incident.getDateTime()));
+            pstmt.setString(5, incident.getCategory().toString());
+            pstmt.setString(6, incident.getReporter() != null ? incident.getReporter().getUsername() : null);
+            pstmt.setInt(7, incident.getEvidence() != null ? incident.getEvidence().getEvidenceId() : 0);
+            pstmt.setString(8, incident.getStatus());
+            pstmt.setInt(9, incident.getIncidentId());
 
             pstmt.executeUpdate();
         } catch (SQLException e) {

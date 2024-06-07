@@ -2,7 +2,7 @@ package buisness.models;
 
 import java.time.LocalDateTime;
 
-public class CrimeReport {
+public class Incident {
     private int incidentId; // Unique identifier for the crime report
     private String description; // Detailed description of the incident
     private Location location; // Location of the incident (consider using a separate Location class)
@@ -12,7 +12,7 @@ public class CrimeReport {
     private Evidence evidence; // Associated evidence with the report (e.g., photos, videos)
     private String status; // Current status of the report (e.g., "New", "In Progress", "Closed")
 
-    public CrimeReport(int incidentId, String description, Location location, LocalDateTime dateTime, CaseCategory category, Citizen reporter, Evidence evidence, String status) {
+    public Incident(int incidentId, String description, Location location, LocalDateTime dateTime, CaseCategory category, Citizen reporter, Evidence evidence, String status) {
         this.incidentId = incidentId;
         this.description = description;
         this.location = location;
@@ -23,10 +23,10 @@ public class CrimeReport {
         this.status = status;
     }
 
-    public CrimeReport() {
+    public Incident() {
     }
 
-    public CrimeReport(String description, Location location, CaseCategory category, Citizen citizen, Evidence evidence) {
+    public Incident(String description, Location location, CaseCategory category, Citizen citizen, Evidence evidence) {
         this.description = description;
         this.location = location;
         this.category = category;
@@ -34,7 +34,7 @@ public class CrimeReport {
         this.evidence = evidence;
     }
 
-    public CrimeReport(String description, Location location, CaseCategory category, Evidence evidence) {
+    public Incident(String description, Location location, CaseCategory category, Evidence evidence) {
         this.description = description;
         this.location = location;
         this.category = category;

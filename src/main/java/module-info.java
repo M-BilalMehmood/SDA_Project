@@ -16,5 +16,6 @@ module cbcrs.sda_project {
     opens cbcrs.presentation to javafx.fxml;
     exports cbcrs.presentation;
     exports cbcrs.presentation.controllers;
+    exports cbcrs.presentation.viewmodels to javafx.graphics;
     opens cbcrs.presentation.controllers to javafx.fxml;
 }

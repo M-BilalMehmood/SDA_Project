@@ -4,21 +4,21 @@ public class Evidence {
     private int evidenceId; // Unique identifier
     private String description; // Brief description of the evidence
     private String filePath; // Path or URL to the evidence file
-    private CrimeReport incident; // The incident this evidence is associated with
+    private Incident incident; // The incident this evidence is associated with
 
     // Constructors
     public Evidence() {
         // Default constructor
     }
 
-    public Evidence(int evidenceId, String description, String filePath, CrimeReport incident) {
+    public Evidence(int evidenceId, String description, String filePath, Incident incident) {
         this.evidenceId = evidenceId;
         this.description = description;
         this.filePath = filePath;
         this.incident = incident;
     }
 
-    public Evidence(String description, String filePath, CrimeReport incident) {
+    public Evidence(String description, String filePath, Incident incident) {
         this.description = description;
         this.filePath = filePath;
         this.incident = incident;
@@ -37,7 +37,7 @@ public class Evidence {
         return filePath;
     }
 
-    public CrimeReport getIncident() {
+    public Incident getIncident() {
         return incident;
     }
 
@@ -54,7 +54,7 @@ public class Evidence {
         this.filePath = filePath;
     }
 
-    public void setIncident(CrimeReport incident) {
+    public void setIncident(Incident incident) {
         this.incident = incident;
     }
 }

@@ -1,10 +1,10 @@
 package buisness.models;
 
 public class Witness {
-    private int witnessId; // Unique identifier
-    private String name; // Full name of the witness (or alias if anonymity is required)
-    private ContactInformation contactInformation; // Contact details of the witness
-    private Case crimeCase; // The case this witness is related to
+    private int witnessId;
+    private String name;
+    private ContactInformation contactInformation;
+    private Case crimeCase;
 
     // Constructors
     public Witness() {

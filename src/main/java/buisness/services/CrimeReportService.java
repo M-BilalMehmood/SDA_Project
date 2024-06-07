@@ -13,29 +13,29 @@ public class CrimeReportService {
         this.crimeReportRepository = crimeReportRepository;
     }
 
-    public CrimeReport createCrimeReport(String description, Location location, CaseCategory category, Citizen citizen, Evidence evidence) {
-        CrimeReport report = new CrimeReport(description, location, category, citizen, evidence);
+    public Incident createCrimeReport(String description, Location location, CaseCategory category, Citizen citizen, Evidence evidence) {
+        Incident report = new Incident(description, location, category, citizen, evidence);
         crimeReportRepository.save(report);
         return report;
     }
 
-    public CrimeReport createCrimeReportAnonymously(String description, Location location, CaseCategory category, Evidence evidence) {
-        CrimeReport report = new CrimeReport(description, location, category, evidence);
+    public Incident createCrimeReportAnonymously(String description, Location location, CaseCategory category, Evidence evidence) {
+        Incident report = new Incident(description, location, category, evidence);
         crimeReportRepository.save(report);
         return report;
     }
 
 
-    public CrimeReport findCrimeReportById(int incidentId) {
+    public Incident findCrimeReportById(int incidentId) {
         return crimeReportRepository.findById(incidentId);
     }
 
-    public List<CrimeReport> findAllCrimeReports() {
+    public List<Incident> findAllCrimeReports() {
         return crimeReportRepository.findAll();
     }
 
-    public void updateCrimeReport(CrimeReport crimeReport) {
-        crimeReportRepository.update(crimeReport);
+    public void updateCrimeReport(Incident incident) {
+        crimeReportRepository.update(incident);
     }
 
     public void deleteCrimeReport(int incidentId) {

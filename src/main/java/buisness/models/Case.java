@@ -1,23 +1,23 @@
 package buisness.models;
 
 public class Case {
-    private int caseId; // Unique identifier for the case
-    private CrimeReport crimeReport; // The reported incident this case is based on
-    private CaseOfficer caseOfficer; // The assigned case officer
-    private Witness witness; // Witness related to the case (if any)
-    private Investigation investigation; // Details and progress of the investigation
-    private CaseStatus status; // Current status of the case (e.g., "Open", "Closed", "Pending")
-    private String finalRemarks; // Final remarks or notes when closing the case
+    private int caseId;
+    private Incident incident;
+    private CaseOfficer caseOfficer;
+    private Citizen witness;
+    private Investigation investigation;
+    private CaseStatus status;
+    private String finalRemarks;
 
     // Constructors
     public Case() {
         // Default constructor
     }
 
-    public Case(int caseId, CrimeReport crimeReport, CaseOfficer caseOfficer, Witness witness,
+    public Case(int caseId, Incident incident, CaseOfficer caseOfficer, Citizen witness,
                 Investigation investigation, CaseStatus status, String finalRemarks) {
         this.caseId = caseId;
-        this.crimeReport = crimeReport;
+        this.incident = incident;
         this.caseOfficer = caseOfficer;
         this.witness = witness;
         this.investigation = investigation;
@@ -25,7 +25,7 @@ public class Case {
         this.finalRemarks = finalRemarks;
     }
 
-    public Case(CrimeReport crimeReport, CaseOfficer caseOfficer, Witness witness, Investigation investigation) {
+    public Case(Incident incident, CaseOfficer caseOfficer, Citizen witness, Investigation investigation) {
     }
 
     // Getters
@@ -33,15 +33,15 @@ public class Case {
         return caseId;
     }
 
-    public CrimeReport getCrimeReport() {
-        return crimeReport;
+    public Incident getCrimeReport() {
+        return incident;
     }
 
     public CaseOfficer getCaseOfficer() {
         return caseOfficer;
     }
 
-    public Witness getWitness() {
+    public Citizen getWitness() {
         return witness;
     }
 
@@ -62,15 +62,15 @@ public class Case {
         this.caseId = caseId;
     }
 
-    public void setIncident(CrimeReport crimeReport) {
-        this.crimeReport = crimeReport;
+    public void setIncident(Incident incident) {
+        this.incident = incident;
     }
 
     public void setCaseOfficer(CaseOfficer caseOfficer) {
         this.caseOfficer = caseOfficer;
     }
 
-    public void setWitness(Witness witness) {
+    public void setWitness(Citizen witness) {
         this.witness = witness;
     }
 
@@ -86,7 +86,7 @@ public class Case {
         this.finalRemarks = finalRemarks;
     }
 
-    public void setCrimeReport(CrimeReport crimeReport) {
-        this.crimeReport = crimeReport;
+    public void setCrimeReport(Incident incident) {
+        this.incident = incident;
     }
 }

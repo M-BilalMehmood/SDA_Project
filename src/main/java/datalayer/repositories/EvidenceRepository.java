@@ -1,6 +1,6 @@
 package datalayer.repositories;
 
-import buisness.models.CrimeReport;
+import buisness.models.Incident;
 import buisness.models.Evidence;
 
 import java.sql.*;
@@ -57,8 +57,8 @@ public class EvidenceRepository {
                     int crimeReportId = rs.getInt("crime_report_id");
                     // You might need to fetch the CrimeReport from the database using crimeReportId
                     // For example:
-                    CrimeReport crimeReport = new CrimeReportRepository().findById(crimeReportId);
-                    evidence.setIncident(crimeReport);
+                    Incident incident = new CrimeReportRepository().findById(crimeReportId);
+                    evidence.setIncident(incident);
                 }
             }
         } catch (SQLException e) {
