@@ -1,6 +1,5 @@
 package cbcrs.presentation.controllers;
 
-import cbcrs.presentation.HelloApplication;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -14,7 +13,7 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 
-public class LoginController {
+public class RegisterController {
 
     @FXML
     private TextField usernameField;
@@ -23,36 +22,46 @@ public class LoginController {
     private PasswordField passwordField;
 
     @FXML
-    private Button loginButton;
+    private TextField emailField;
 
     @FXML
-    private Button signUpButton;
+    private TextField phoneField;
 
     @FXML
-    private void handleLoginButton(ActionEvent event) {
+    private Button registerButton;
+
+    @FXML
+    private Button cancelButton;
+
+    @FXML
+    private void handleRegisterButton(ActionEvent event) {
         String username = usernameField.getText();
         String password = passwordField.getText();
+        String email = emailField.getText();
+        String phone = phoneField.getText();
 
-        if(username.isEmpty() || password.isEmpty()) {
-            System.out.println("Username and password must be filled");
+        if(username.isEmpty() || password.isEmpty() || email.isEmpty() || phone.isEmpty()) {
+            System.out.println("All fields must be filled");
             return;
         }
 
         System.out.println("Username: " + username);
         System.out.println("Password: " + password);
+        System.out.println("Email: " + email);
+        System.out.println("Phone: " + phone);
     }
 
     @FXML
-    private void handleSignUpButton(ActionEvent event) {
+    private void handleCancelButton(ActionEvent event) {
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/cbcrs/presentation/Register-view.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/cbcrs/presentation/login-view.fxml"));
             Parent root = loader.load();
             Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
             Scene scene = new Scene(root);
             stage.setScene(scene);
             stage.show();
         } catch (IOException e) {
-            System.err.println("Error loading register page: " + e.getMessage());
+            System.err.println("Error loading login page: " + e.getMessage());
         }
     }
 }
