@@ -12,6 +12,7 @@ module cbcrs.sda_project {
     requires com.almasb.fxgl.all;
     requires java.sql;
     requires com.gluonhq.maps;
+    requires jbcrypt;
 
     opens cbcrs.presentation to javafx.fxml;
     exports cbcrs.presentation;

@@ -1,5 +1,7 @@
 package cbcrs.presentation.controllers;
 
+import buisness.models.User;
+import buisness.services.UserService;
 import cbcrs.presentation.HelloApplication;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -19,6 +21,8 @@ public class LoginController {
     @FXML
     private TextField usernameField;
 
+    UserService userService = new UserService();
+
     @FXML
     private PasswordField passwordField;
 
@@ -33,13 +37,14 @@ public class LoginController {
         String username = usernameField.getText();
         String password = passwordField.getText();
 
-        if(username.isEmpty() || password.isEmpty()) {
-            System.out.println("Username and password must be filled");
-            return;
+        User user = userService.loginUser(username, password);
+        if (user != null) {
+            // Login successful - navigate to the main application or dashboard
+            System.out.println("Login successful!");
+        } else {
+            // Login failed - show error message
+            System.out.println("Login failed!");
         }
-
-        System.out.println("Username: " + username);
-        System.out.println("Password: " + password);
     }
 
     @FXML

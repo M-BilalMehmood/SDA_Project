@@ -27,7 +27,7 @@
         <TextField fx:id="usernameField" promptText="Username"
                    style="-fx-background-radius: 20px; -fx-padding: 10px;">
         </TextField>
-        <PasswordField fx:id="passwordField" promptText="Password"
+        <PasswordField fx:id="confirmPasswordField" promptText="Password"
                        style="-fx-background-radius: 20px; -fx-padding: 10px;">
         </PasswordField>
         <TextField fx:id="emailField" promptText="Email"
