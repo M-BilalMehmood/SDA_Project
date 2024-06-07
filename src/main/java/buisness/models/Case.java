@@ -9,6 +9,8 @@ public class Case {
     private CaseStatus status; // Current status of the case (e.g., "Open", "Closed", "Pending")
     private String finalRemarks; // Final remarks or notes when closing the case
 
+    //shoaib's first git edit !!!
+
     // Constructors
     public Case() {
         // Default constructor
