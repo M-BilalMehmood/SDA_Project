@@ -6,13 +6,13 @@ public class Incident {
     private int incidentId; // Unique identifier for the crime report
     private String description; // Detailed description of the incident
     private String location; // Location of the incident (consider using a separate Location class)
-    private LocalDateTime dateTime; // Date and time of the incident
+    private String dateTime; // Date and time of the incident
     private CaseCategory category; // Category of the crime (e.g., theft, assault, vandalism)
     private Citizen reporter; // Citizen who reported the crime (optional if anonymous reporting is allowed)
     private Evidence evidence; // Associated evidence with the report (e.g., photos, videos)
     private String status; // Current status of the report (e.g., "New", "In Progress", "Closed")
 
-    public Incident(int incidentId, String description, String location, LocalDateTime dateTime, CaseCategory category, Citizen reporter, Evidence evidence, String status) {
+    public Incident(int incidentId, String description, String location, String dateTime, CaseCategory category, Citizen reporter, Evidence evidence, String status) {
         this.incidentId = incidentId;
         this.description = description;
         this.location = location;
@@ -66,11 +66,11 @@ public class Incident {
         this.location = location;
     }
 
-    public LocalDateTime getDateTime() {
+    public String getDateTime() {
         return dateTime;
     }
 
-    public void setDateTime(LocalDateTime dateTime) {
+    public void setDateTime(String dateTime) {
         this.dateTime = dateTime;
     }
 
@@ -138,7 +138,7 @@ public class Incident {
         this.category = newCategory;
     }
 
-    public void updateDateTime(LocalDateTime newDateTime) {
+    public void updateDateTime(String newDateTime) {
         this.dateTime = newDateTime;
     }
 
@@ -154,7 +154,7 @@ public class Incident {
         this.status = "In Progress";
     }
 
-    public void updateReport(int incidentId, String description, String location, LocalDateTime dateTime, CaseCategory category, Citizen reporter, Evidence evidence, String status) {
+    public void updateReport(int incidentId, String description, String location, String dateTime, CaseCategory category, Citizen reporter, Evidence evidence, String status) {
         this.incidentId = incidentId;
         this.description = description;
         this.location = location;

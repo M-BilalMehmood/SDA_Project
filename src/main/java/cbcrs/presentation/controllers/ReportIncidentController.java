@@ -25,8 +25,6 @@ public class ReportIncidentController {
     public CheckBox anonymousCheckBox;
     public ComboBox incidentTypeComboBox;
     @FXML
-    private TextField incidentTypeField;
-    @FXML
     private TextField nameField;
     @FXML
     private TextArea descriptionField;
@@ -63,7 +61,7 @@ public class ReportIncidentController {
     }
 
     private void handleSubmit(ActionEvent event) {
-        String incidentType = incidentTypeField.getText();
+        String incidentType = incidentTypeComboBox.getValue().toString();
         String name = nameField.getText();
         String location = locationField.getText();
         String description = descriptionField.getText();
@@ -90,7 +88,7 @@ public class ReportIncidentController {
             newIncident.setEvidence(new Evidence());
             newIncident.getEvidence().setEvidenceId(IncidentRepository.getLastEvidenceId() + 1);
 
-            newIncident.setCategory(CaseCategory.valueOf(incidentType));
+            //newIncident.setCategory(CaseCategory.valueOf(incidentType));
 
             IncidentRepository incidentRepository = new IncidentRepository();
             incidentRepository.save(newIncident);
@@ -103,7 +101,7 @@ public class ReportIncidentController {
             alert.showAndWait();
 
             // Clear the form fields
-            incidentTypeField.clear();
+            //incidentTypeField.clear();
             nameField.clear();
             locationField.clear();
             descriptionField.clear();

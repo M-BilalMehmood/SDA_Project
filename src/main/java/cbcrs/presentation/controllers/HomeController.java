@@ -76,8 +76,7 @@ public class HomeController {
     private void loadRecentIncidents() {
         List<Incident> recentIncidents = IncidentService.getRecentIncidents();
 
-        recentIncidents.sort(Comparator.comparing(Incident::getSeverity).reversed()
-                .thenComparing(Incident::getDateTime).reversed());
+        recentIncidents.sort(Comparator.comparing((Incident incident) -> incident.getSeverity() != null ? incident.getSeverity() : "").reversed());
 
         ObservableList<Incident> incidentList = FXCollections.observableArrayList(recentIncidents);
         incidentListView.setItems(incidentList);

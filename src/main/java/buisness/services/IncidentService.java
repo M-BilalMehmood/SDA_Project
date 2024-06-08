@@ -74,6 +74,10 @@ public class IncidentService {
     }
 
     public static Citizen getCurrentUser() {
-        return (Citizen) currentUser;
+        User user = currentUser;
+        if (user instanceof Citizen) {
+            Citizen citizen = (Citizen) user;
+        }
+        return null;
     }
 }
