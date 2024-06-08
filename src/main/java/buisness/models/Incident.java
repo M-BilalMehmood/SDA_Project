@@ -186,4 +186,12 @@ public class Incident {
         System.out.println("Evidence: " + evidence);
         System.out.println("Status: " + status);
     }
+
+    public String getSeverity() {
+        return switch (this.category) {
+            case RAPE, VANDALISM, ASSAULT -> "1";
+            case THEFT -> "2";
+            default -> "3";
+        };
+    }
 }

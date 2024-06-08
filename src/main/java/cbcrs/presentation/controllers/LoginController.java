@@ -41,6 +41,20 @@ public class LoginController {
         if (user != null) {
             // Login successful - navigate to the main application or dashboard
             System.out.println("Login successful!");
+            try {
+                // Load the Home-view.fxml
+                FXMLLoader loader = new FXMLLoader(getClass().getResource("/cbcrs/presentation/Home-view.fxml"));
+                Parent root = loader.load();
+
+                // Get the current stage and set the new scene
+                Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+                Scene scene = new Scene(root);
+                stage.setScene(scene);
+                stage.show();
+
+            } catch (IOException e) {
+                System.err.println("Error loading home page: " + e.getMessage());
+            }
         } else {
             // Login failed - show error message
             System.out.println("Login failed!");

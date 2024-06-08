@@ -11,8 +11,10 @@ module cbcrs.sda_project {
     requires eu.hansolo.tilesfx;
     requires com.almasb.fxgl.all;
     requires java.sql;
-    requires com.gluonhq.maps;
     requires jbcrypt;
+    requires java.desktop;
+    requires jxmapviewer2;
+    requires javafx.swing;
 
     opens cbcrs.presentation to javafx.fxml;
     exports cbcrs.presentation;

@@ -75,7 +75,7 @@ public class CaseRepository {
 
                     // Retrieve associated objects (CrimeReport, CaseOfficer, etc.)
                     int crimeReportId = rs.getInt("crime_report_id");
-                    Incident incident = new CrimeReportRepository().findById(crimeReportId); // Fetch CrimeReport
+                    Incident incident = new IncidentRepository().findById(crimeReportId); // Fetch CrimeReport
                     crimeCase.setCrimeReport(incident);
 
                     String caseOfficerUsername = rs.getString("case_officer_username");
@@ -120,7 +120,7 @@ public class CaseRepository {
 
                 // Retrieve associated objects
                 int crimeReportId = rs.getInt("crime_report_id");
-                Incident incident = new CrimeReportRepository().findById(crimeReportId);
+                Incident incident = new IncidentRepository().findById(crimeReportId);
                 crimeCase.setCrimeReport(incident);
 
                 String caseOfficerUsername = rs.getString("case_officer_username");

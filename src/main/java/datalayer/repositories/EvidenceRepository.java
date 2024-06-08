@@ -57,7 +57,7 @@ public class EvidenceRepository {
                     int crimeReportId = rs.getInt("crime_report_id");
                     // You might need to fetch the CrimeReport from the database using crimeReportId
                     // For example:
-                    Incident incident = new CrimeReportRepository().findById(crimeReportId);
+                    Incident incident = new IncidentRepository().findById(crimeReportId);
                     evidence.setIncident(incident);
                 }
             }

@@ -6,15 +6,15 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-public class CrimeReportRepository {
-    private final String url = "jdbc:mysql://localhost:3306/sda_proj";
-    private final String user = "root";
-    private final String password = "root";
+public class IncidentRepository {
+    private static final String url = "jdbc:mysql://localhost:3306/sda_proj";
+    private static final String user = "root";
+    private static final String password = "root";
 
     // ... (other methods)
 
     public void save(Incident report) {
-        String sql = "INSERT INTO crime_reports (description, latitude, longitude, dateTime, category, reporter_username, evidence_id, status) " +
+        String sql = "INSERT INTO incidents (description, latitude, longitude, dateTime, category, reporter_username, evidence_id, status) " +
                 "VALUES (?, ?, ?, ?, ?, ?, ?, ?)"; // Assuming you have columns for these attributes
 
         try (Connection conn = DriverManager.getConnection(url, user, password);
@@ -47,7 +47,7 @@ public class CrimeReportRepository {
     }
 
     public Incident findById(int incidentId) {
-        String sql = "SELECT * FROM crime_reports WHERE incidentId = ?";
+        String sql = "SELECT * FROM incidents WHERE incident_id = ?";
         Incident report = null;
 
         try (Connection conn = DriverManager.getConnection(url, user, password);
@@ -71,8 +71,8 @@ public class CrimeReportRepository {
         return report;
     }
 
-    public List<Incident> findAll() {
-        String sql = "SELECT * FROM crime_reports";
+    public static List<Incident> findAll() {
+        String sql = "SELECT * FROM incidents";
         List<Incident> reports = new ArrayList<>();
 
         try (Connection conn = DriverManager.getConnection(url, user, password);
@@ -96,7 +96,7 @@ public class CrimeReportRepository {
     }
 
     public void update(Incident incident) {
-        String sql = "UPDATE crime_reports SET description = ?, latitude = ?, longitude = ?, dateTime = ?, category = ?, reporter_username = ?, evidence_id = ?, status = ? WHERE incidentId = ?";
+        String sql = "UPDATE incidents SET description = ?, latitude = ?, longitude = ?, dateTime = ?, category = ?, reporter_username = ?, evidence_id = ?, status = ? WHERE incidentId = ?";
 
         try (Connection conn = DriverManager.getConnection(url, user, password);
              PreparedStatement pstmt = conn.prepareStatement(sql)) {
@@ -120,7 +120,7 @@ public class CrimeReportRepository {
     }
 
     public void delete(int incidentId) {
-        String sql = "DELETE FROM crime_reports WHERE incidentId = ?";
+        String sql = "DELETE FROM incidents WHERE incidentId = ?";
 
         try (Connection conn = DriverManager.getConnection(url, user, password);
              PreparedStatement pstmt = conn.prepareStatement(sql)) {
