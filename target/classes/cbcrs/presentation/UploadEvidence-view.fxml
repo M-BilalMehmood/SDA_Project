@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.VBox?>
+
+<VBox xmlns="http://javafx.com/javafx"
+      xmlns:fx="http://javafx.com/fxml"
+      fx:controller="cbcrs.presentation.controllers.uploadEvidenceController"
+        prefHeight="200.0" prefWidth="300.0"
+      spacing="10">
+
+    <Label text="Add Evidence" style="-fx-font-size: 18px; -fx-font-weight: bold;"/>
+
+    <TextField fx:id="evidenceDescriptionField" promptText="Evidence Description"/>
+
+    <TextField fx:id="evidenceFilePathField" promptText="File Path (Optional)"/>
+
+    <Button fx:id="addEvidenceButton" text="Add Evidence" onAction="#handleAddEvidence"/>
+
+</VBox>

@@ -91,4 +91,8 @@ public class Case {
     public void setCrimeReport(Incident incident) {
         this.incident = incident;
     }
+
+    public Incident getIncident() {
+        return incident;
+    }
 }

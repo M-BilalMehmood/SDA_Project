@@ -13,7 +13,7 @@ public class EvidenceRepository {
     private final String password = "root";
 
     public void save(Evidence evidence) {
-        String sql = "INSERT INTO evidences (description, file_path, crime_report_id) " +
+        String sql = "INSERT INTO evidence (description, file_path, incident_id) " +
                 "VALUES (?, ?, ?)";
 
         try (Connection conn = DriverManager.getConnection(url, user, password);
@@ -21,7 +21,7 @@ public class EvidenceRepository {
 
             pstmt.setString(1, evidence.getDescription());
             pstmt.setString(2, evidence.getFilePath());
-            pstmt.setInt(3, evidence.getIncident().getIncidentId()); // Assuming CrimeReport is associated
+            pstmt.setInt(3, evidence.getIncident().getIncidentId()); // Assuming Incident is associated
 
             int affectedRows = pstmt.executeUpdate();
 
@@ -38,7 +38,7 @@ public class EvidenceRepository {
     }
 
     public Evidence findById(int evidenceId) {
-        String sql = "SELECT * FROM evidences WHERE evidence_id = ?";
+        String sql = "SELECT * FROM evidence WHERE evidence_id = ?";
         Evidence evidence = null;
 
         try (Connection conn = DriverManager.getConnection(url, user, password);
@@ -53,12 +53,12 @@ public class EvidenceRepository {
                     evidence.setDescription(rs.getString("description"));
                     evidence.setFilePath(rs.getString("file_path"));
 
-                    // Retrieve associated CrimeReport (if needed)
-                    int crimeReportId = rs.getInt("crime_report_id");
-                    // You might need to fetch the CrimeReport from the database using crimeReportId
+                    // Retrieve associated Incident (if needed)
+                    //int incidentId = rs.getInt("incident_id");
+                    // You might need to fetch the Incident from the database using incidentId
                     // For example:
-                    Incident incident = new IncidentRepository().findById(crimeReportId);
-                    evidence.setIncident(incident);
+                    //Incident incident = new IncidentRepository().findById(incidentId);
+                    //evidence.setIncident(incident);
                 }
             }
         } catch (SQLException e) {
@@ -69,7 +69,7 @@ public class EvidenceRepository {
     }
 
     public List<Evidence> findAll() {
-        String sql = "SELECT * FROM evidences";
+        String sql = "SELECT * FROM evidence";
         List<Evidence> evidences = new ArrayList<>();
 
         try (Connection conn = DriverManager.getConnection(url, user, password);
@@ -82,7 +82,7 @@ public class EvidenceRepository {
                 evidence.setDescription(rs.getString("description"));
                 evidence.setFilePath(rs.getString("file_path"));
 
-                // Retrieve associated CrimeReport (if needed)
+                // Retrieve associated Incident (if needed)
                 // ... (similar to findById method)
 
                 evidences.add(evidence);
@@ -95,7 +95,7 @@ public class EvidenceRepository {
     }
 
     public void update(Evidence evidence) {
-        String sql = "UPDATE evidences SET description = ?, file_path = ?, crime_report_id = ? " +
+        String sql = "UPDATE evidence SET description = ?, file_path = ?, incident_id = ? " +
                 "WHERE evidence_id = ?";
 
         try (Connection conn = DriverManager.getConnection(url, user, password);
@@ -103,7 +103,7 @@ public class EvidenceRepository {
 
             pstmt.setString(1, evidence.getDescription());
             pstmt.setString(2, evidence.getFilePath());
-            pstmt.setInt(3, evidence.getIncident().getIncidentId()); // Assuming you have the CrimeReport object
+            pstmt.setInt(3, evidence.getIncident().getIncidentId()); // Assuming you have the Incident object
             pstmt.setInt(4, evidence.getEvidenceId());
 
             pstmt.executeUpdate();
@@ -113,7 +113,7 @@ public class EvidenceRepository {
     }
 
     public void delete(int evidenceId) {
-        String sql = "DELETE FROM evidences WHERE evidence_id = ?";
+        String sql = "DELETE FROM evidence WHERE evidence_id = ?";
 
         try (Connection conn = DriverManager.getConnection(url, user, password);
              PreparedStatement pstmt = conn.prepareStatement(sql)) {

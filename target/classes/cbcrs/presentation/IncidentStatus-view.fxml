@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ListView?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.control.Button?>
+
+<VBox xmlns="http://javafx.com/javafx"
+      xmlns:fx="http://javafx.com/fxml"
+      fx:controller="cbcrs.presentation.controllers.IncidentStatusController"
+      prefHeight="890.0" prefWidth="460.0"
+      spacing="10">
+
+    <Label text="My Reported Incidents" style="-fx-font-size: 30px; -fx-font-weight: bold; -fx-text-fill: #333;"/>
+
+    <ListView fx:id="incidentListView" prefHeight="760.0" VBox.vgrow="NEVER"/>
+
+    <HBox fx:id="bottomHBox" spacing="5" alignment="CENTER" style="-fx-background-color: #f4f4f4;">
+        <Button fx:id="homeButton" text="Home" onAction="#handleHomeButton" style="-fx-background-color: #cccccc; -fx-text-fill: black; -fx-font-size: 15px; -fx-padding: 5px; -fx-min-width: 100px; -fx-min-height: 40px;"/>
+        <Button fx:id="reportIncidentButton" text="Report Incident" onAction="#handleReportIncidentButton" style="-fx-background-color: #cccccc; -fx-text-fill: black; -fx-font-size: 15px; -fx-padding: 5px; -fx-min-width: 100px; -fx-min-height: 40px;"/>
+        <Button fx:id="contactsButton" text="Status" onAction="#handleContactsButton" style="-fx-background-color: #007bff; -fx-text-fill: white; -fx-font-size: 15px; -fx-padding: 5px; -fx-min-width: 100px; -fx-min-height: 40px;"/>
+        <Button fx:id="moreButton" text="More" onAction="#handleMoreButton" style="-fx-background-color: #cccccc; -fx-text-fill: black; -fx-font-size: 15px; -fx-padding: 5px; -fx-min-width: 100px; -fx-min-height: 40px;"/>
+    </HBox>
+
+</VBox>

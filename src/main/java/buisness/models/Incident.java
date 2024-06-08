@@ -5,14 +5,14 @@ import java.time.LocalDateTime;
 public class Incident {
     private int incidentId; // Unique identifier for the crime report
     private String description; // Detailed description of the incident
-    private Location location; // Location of the incident (consider using a separate Location class)
+    private String location; // Location of the incident (consider using a separate Location class)
     private LocalDateTime dateTime; // Date and time of the incident
     private CaseCategory category; // Category of the crime (e.g., theft, assault, vandalism)
     private Citizen reporter; // Citizen who reported the crime (optional if anonymous reporting is allowed)
     private Evidence evidence; // Associated evidence with the report (e.g., photos, videos)
     private String status; // Current status of the report (e.g., "New", "In Progress", "Closed")
 
-    public Incident(int incidentId, String description, Location location, LocalDateTime dateTime, CaseCategory category, Citizen reporter, Evidence evidence, String status) {
+    public Incident(int incidentId, String description, String location, LocalDateTime dateTime, CaseCategory category, Citizen reporter, Evidence evidence, String status) {
         this.incidentId = incidentId;
         this.description = description;
         this.location = location;
@@ -26,7 +26,7 @@ public class Incident {
     public Incident() {
     }
 
-    public Incident(String description, Location location, CaseCategory category, Citizen citizen, Evidence evidence) {
+    public Incident(String description, String location, CaseCategory category, Citizen citizen, Evidence evidence) {
         this.description = description;
         this.location = location;
         this.category = category;
@@ -34,7 +34,7 @@ public class Incident {
         this.evidence = evidence;
     }
 
-    public Incident(String description, Location location, CaseCategory category, Evidence evidence) {
+    public Incident(String description, String location, CaseCategory category, Evidence evidence) {
         this.description = description;
         this.location = location;
         this.category = category;
@@ -58,11 +58,11 @@ public class Incident {
         this.description = description;
     }
 
-    public Location getLocation() {
+    public String getLocation() {
         return location;
     }
 
-    public void setLocation(Location location) {
+    public void setLocation(String location) {
         this.location = location;
     }
 
@@ -130,7 +130,7 @@ public class Incident {
         this.description = newDescription;
     }
 
-    public void updateLocation(Location newLocation) {
+    public void updateLocation(String newLocation) {
         this.location = newLocation;
     }
 
@@ -154,7 +154,7 @@ public class Incident {
         this.status = "In Progress";
     }
 
-    public void updateReport(int incidentId, String description, Location location, LocalDateTime dateTime, CaseCategory category, Citizen reporter, Evidence evidence, String status) {
+    public void updateReport(int incidentId, String description, String location, LocalDateTime dateTime, CaseCategory category, Citizen reporter, Evidence evidence, String status) {
         this.incidentId = incidentId;
         this.description = description;
         this.location = location;
@@ -193,5 +193,15 @@ public class Incident {
             case THEFT -> "2";
             default -> "3";
         };
+    }
+
+    @Override
+    public String toString() {
+        StringBuilder sb = new StringBuilder();
+        sb.append("Incident ID: ").append(incidentId).append("\n");
+        sb.append("Location: ").append(location).append("\n");
+        sb.append("Date Time: ").append(dateTime).append("\n");
+        sb.append("Category: ").append(category).append("\n");
+        return sb.toString();
     }
 }

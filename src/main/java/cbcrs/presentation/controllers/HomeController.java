@@ -4,7 +4,6 @@ import buisness.models.Incident;
 import buisness.services.IncidentService;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.embed.swing.SwingNode;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -13,18 +12,11 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.ListCell;
 import javafx.scene.layout.HBox;
 import javafx.scene.control.ListView;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
-import org.jxmapviewer.JXMapViewer;
-import org.jxmapviewer.OSMTileFactoryInfo;
-import org.jxmapviewer.viewer.GeoPosition;
-import org.jxmapviewer.viewer.TileFactoryInfo;
-
-import javax.swing.*;
-import java.awt.event.ComponentAdapter;
-import java.awt.event.ComponentEvent;
 import java.io.IOException;
 import java.util.*;
 
@@ -56,45 +48,57 @@ public class HomeController {
         bottomHBox.setPadding(bottomPadding);
         SentinalLogo.setPadding(logoPadding);
         incidentListContainer.setPadding(new Insets(20));
-        //highlightButton(homeButton);
+        incidentListView.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
+            if (newValue != null) {
+                openAddEvidenceWindow(newValue);
+            }
+        });
         loadRecentIncidents();
     }
 
-    private void createSwingContent(final SwingNode swingNode) {
-        SwingUtilities.invokeLater(() -> {
-            JXMapViewer mapViewer = new JXMapViewer();
-            TileFactoryInfo info = new OSMTileFactoryInfo();
-            mapViewer.setTileFactory(new org.jxmapviewer.viewer.DefaultTileFactory(info));
+    private void openAddEvidenceWindow(Incident incident) {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/cbcrs/presentation/UploadEvidence-view.fxml"));
+            // Pass the incident to the AddEvidenceController
+            loader.setControllerFactory(aClass -> new uploadEvidenceController(incident));
+            Parent root = loader.load();
 
-            GeoPosition islamabad = new GeoPosition(33.6844, 73.0479);
-            mapViewer.setZoom(0);
-            mapViewer.setAddressLocation(islamabad);
+            Stage stage = new Stage();
+            stage.setTitle("Add Evidence");
+            stage.setScene(new Scene(root));
+            stage.show();
 
-            // Add a ComponentListener to update the preferred size of the JXMapViewer
-            mapViewer.addComponentListener(new ComponentAdapter() {
-                @Override
-                public void componentResized(ComponentEvent e) {
-                    mapViewer.setPreferredSize(e.getComponent().getSize());
-                }
-            });
-
-            swingNode.setContent(mapViewer);
-        });
+        } catch (IOException e) {
+            System.err.println("Error loading AddEvidence page: " + e.getMessage());
+        }
     }
 
     private void loadRecentIncidents() {
-        List<Incident> recentIncidents = IncidentService.getRecentIncidents(); // Implement this method in IncidentService
+        List<Incident> recentIncidents = IncidentService.getRecentIncidents();
 
-        // Sort incidents by severity (assuming you have a severity attribute in Incident) and then by time
         recentIncidents.sort(Comparator.comparing(Incident::getSeverity).reversed()
                 .thenComparing(Incident::getDateTime).reversed());
 
         ObservableList<Incident> incidentList = FXCollections.observableArrayList(recentIncidents);
         incidentListView.setItems(incidentList);
 
-        // You might need to create a custom cell factory for the ListView to display incident details properly
-        // incidentListView.setCellFactory(...); 
+        // Create a custom cell factory for the incident list view
+        incidentListView.setCellFactory(param -> new ListCell<>() {
+            @Override
+            protected void updateItem(Incident incident, boolean empty) {
+                super.updateItem(incident, empty);
+                if (empty || incident == null) {
+                    setText(null);
+                } else {
+                    setText("Incident ID: " + incident.getIncidentId() +
+                            "\nLocation: " + incident.getLocation() +
+                            "\nDate Time: " + incident.getDateTime() +
+                            "\nCategory: " + incident.getCategory());
+                }
+            }
+        });
     }
+
 
     // Navigation Button Handlers (replace with your navigation logic)
     @FXML
@@ -107,7 +111,7 @@ public class HomeController {
         //call the report incident page
         try {
             // Load the Home-view.fxml
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/cbcrs/presentation/ReportIncident.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/cbcrs/presentation/ReportIncident-view.fxml"));
             Parent root = loader.load();
 
             // Get the current stage and set the new scene
@@ -123,7 +127,20 @@ public class HomeController {
 
     @FXML
     private void handleContactsButton(ActionEvent event) {
-        // ...
+        try {
+            // Load the Home-view.fxml
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/cbcrs/presentation/IncidentStatus-view.fxml"));
+            Parent root = loader.load();
+
+            // Get the current stage and set the new scene
+            Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+            Scene scene = new Scene(root);
+            stage.setScene(scene);
+            stage.show();
+
+        } catch (IOException e) {
+            System.err.println("Error loading home page: " + e.getMessage());
+        }
     }
 
     @FXML

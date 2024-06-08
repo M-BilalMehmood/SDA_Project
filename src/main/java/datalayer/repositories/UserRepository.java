@@ -2,6 +2,7 @@ package datalayer.repositories;
 
 import buisness.models.CaseOfficer;
 import buisness.models.User;
+import buisness.models.UserRole;
 
 import java.sql.*;
 
@@ -12,7 +13,7 @@ public class UserRepository {
     private final String password = "root";
 
     public void save(User user) {
-        String sql = "INSERT INTO users (username, password, role) VALUES (?, ?, ?)";
+        String sql = "INSERT INTO users (username, password, role, phone_number, email_address) VALUES (?, ?, ?, ?, ?)";
 
         try (Connection conn = DriverManager.getConnection(url, this.user, password);
              PreparedStatement pstmt = conn.prepareStatement(sql)) {
@@ -20,6 +21,8 @@ public class UserRepository {
             pstmt.setString(1, user.getUsername());
             pstmt.setString(2, user.getPassword()); // Remember to hash passwords in a real application!
             pstmt.setString(3, user.getRole().toString()); // Assuming UserRole is an enum
+            pstmt.setString(4, user.getPhoneNumber());
+            pstmt.setString(5, user.getEmail());
 
             pstmt.executeUpdate();
         } catch (SQLException e) {
@@ -41,6 +44,9 @@ public class UserRepository {
                     user = new User();
                     user.setUsername(rs.getString("username"));
                     user.setPassword(rs.getString("password"));
+                    user.setRole(UserRole.valueOf(rs.getString("role"))); // Assuming UserRole is an enum
+                    user.setPhoneNumber(rs.getString("phone_number"));
+                    user.setEmail(rs.getString("email_address"));
                     // ... set other attributes from ResultSet
                 }
             }
@@ -52,7 +58,7 @@ public class UserRepository {
     }
 
     public CaseOfficer findOfficerByUsername(String assignedOfficerUsername) {
-        String sql = "SELECT * FROM case_officers WHERE username = ?";
+        String sql = "SELECT * FROM users WHERE username = ? AND role = 'CASE_OFFICER'";
         CaseOfficer caseOfficer = null;
 
         try (Connection conn = DriverManager.getConnection(url, this.user, password);
@@ -65,6 +71,9 @@ public class UserRepository {
                     caseOfficer = new CaseOfficer();
                     caseOfficer.setUsername(rs.getString("username"));
                     caseOfficer.setPassword(rs.getString("password"));
+                    caseOfficer.setRole(UserRole.valueOf(rs.getString("role"))); // Assuming UserRole is an enum
+                    caseOfficer.setPhoneNumber(rs.getString("phone_number"));
+                    caseOfficer.setEmail(rs.getString("email_address"));
                     // ... set other attributes from ResultSet
                 }
             }

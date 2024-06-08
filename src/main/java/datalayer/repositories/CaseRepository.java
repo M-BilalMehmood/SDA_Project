@@ -1,6 +1,6 @@
 package datalayer.repositories;
-import buisness.models.*;
 
+import buisness.models.*;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -11,15 +11,15 @@ public class CaseRepository {
     private final String password = "root";
 
     public void save(Case crimeCase) {
-        String sql = "INSERT INTO cases (crime_report_id, case_officer_username, witness_username, investigation_id, status, final_remarks) " +
+        String sql = "INSERT INTO cases (incident_id, case_officer_username, witness_username, investigation_id, status, final_remarks) " +
                 "VALUES (?, ?, ?, ?, ?, ?)";
 
         try (Connection conn = DriverManager.getConnection(url, user, password);
              PreparedStatement pstmt = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
 
-            pstmt.setInt(1, crimeCase.getCrimeReport().getIncidentId());
+            pstmt.setInt(1, crimeCase.getIncident().getIncidentId());
             pstmt.setString(2, crimeCase.getCaseOfficer().getUsername());
-            pstmt.setString(3, crimeCase.getWitness() != null ? crimeCase.getWitness().getUsername() : null); // Set witness username
+            pstmt.setString(3, crimeCase.getWitness() != null ? crimeCase.getWitness().getUsername() : null);
             pstmt.setInt(4, crimeCase.getInvestigation() != null ? crimeCase.getInvestigation().getInvestigationId() : 0);
             pstmt.setString(5, crimeCase.getStatus().toString());
             pstmt.setString(6, crimeCase.getFinalRemarks());
@@ -39,13 +39,13 @@ public class CaseRepository {
     }
 
     public void update(Case crimeCase) {
-        String sql = "UPDATE cases SET crime_report_id = ?, case_officer_username = ?, witness_username = ?, investigation_id = ?, status = ?, final_remarks = ? " +
+        String sql = "UPDATE cases SET incident_id = ?, case_officer_username = ?, witness_username = ?, investigation_id = ?, status = ?, final_remarks = ? " +
                 "WHERE case_id = ?";
 
         try (Connection conn = DriverManager.getConnection(url, user, password);
              PreparedStatement pstmt = conn.prepareStatement(sql)) {
 
-            pstmt.setInt(1, crimeCase.getCrimeReport().getIncidentId());
+            pstmt.setInt(1, crimeCase.getIncident().getIncidentId());
             pstmt.setString(2, crimeCase.getCaseOfficer().getUsername());
             pstmt.setString(3, crimeCase.getWitness() != null ? crimeCase.getWitness().getUsername() : null);
             pstmt.setInt(4, crimeCase.getInvestigation() != null ? crimeCase.getInvestigation().getInvestigationId() : 0);
@@ -73,24 +73,23 @@ public class CaseRepository {
                     crimeCase = new Case();
                     crimeCase.setCaseId(rs.getInt("case_id"));
 
-                    // Retrieve associated objects (CrimeReport, CaseOfficer, etc.)
-                    int crimeReportId = rs.getInt("crime_report_id");
-                    Incident incident = new IncidentRepository().findById(crimeReportId); // Fetch CrimeReport
-                    crimeCase.setCrimeReport(incident);
+                    // Retrieve associated objects (Incident, CaseOfficer, etc.)
+                    int incidentId = rs.getInt("incident_id");
+                    Incident incident = new IncidentRepository().findById(incidentId);
+                    crimeCase.setIncident(incident);
 
                     String caseOfficerUsername = rs.getString("case_officer_username");
-                    User caseOfficer = new UserRepository().findByUsername(caseOfficerUsername); // Fetch CaseOfficer
-                    crimeCase.setCaseOfficer((CaseOfficer) caseOfficer); // Assuming CaseOfficer is a User subclass
+                    User caseOfficer = new UserRepository().findByUsername(caseOfficerUsername);
+                    crimeCase.setCaseOfficer((CaseOfficer) caseOfficer);
 
                     String witnessUsername = rs.getString("witness_username");
                     if (witnessUsername != null) {
-                        User witness = new UserRepository().findByUsername(witnessUsername); // Fetch Citizen (Witness)
-                        crimeCase.setWitness((Citizen) witness); // Assuming Citizen is a User subclass
+                        User witness = new UserRepository().findByUsername(witnessUsername);
+                        crimeCase.setWitness((Citizen) witness);
                     }
 
-                    // Fetch and set Investigation
                     int investigationId = rs.getInt("investigation_id");
-                    if (investigationId != 0) { // Assuming 0 means no investigation is associated
+                    if (investigationId != 0) {
                         Investigation investigation = new InvestigationRepository().findById(investigationId);
                         crimeCase.setInvestigation(investigation);
                     }
@@ -119,9 +118,9 @@ public class CaseRepository {
                 crimeCase.setCaseId(rs.getInt("case_id"));
 
                 // Retrieve associated objects
-                int crimeReportId = rs.getInt("crime_report_id");
-                Incident incident = new IncidentRepository().findById(crimeReportId);
-                crimeCase.setCrimeReport(incident);
+                int incidentId = rs.getInt("incident_id");
+                Incident incident = new IncidentRepository().findById(incidentId);
+                crimeCase.setIncident(incident);
 
                 String caseOfficerUsername = rs.getString("case_officer_username");
                 User caseOfficer = new UserRepository().findByUsername(caseOfficerUsername);
@@ -129,7 +128,7 @@ public class CaseRepository {
 
                 String witnessUsername = rs.getString("witness_username");
                 if (witnessUsername != null) {
-                    User witness = new UserRepository().findByUsername(witnessUsername); // Fetch Citizen (Witness)
+                    User witness = new UserRepository().findByUsername(witnessUsername);
                     crimeCase.setWitness((Citizen) witness);
                 }
 

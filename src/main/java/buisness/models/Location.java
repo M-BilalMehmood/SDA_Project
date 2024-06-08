@@ -1,8 +1,7 @@
 package buisness.models;
 
 public class Location {
-    private double latitude;
-    private double longitude;
+    private String city;
     private String address; // Optional: More human-readable address
 
     // Constructors
@@ -10,24 +9,18 @@ public class Location {
         // Default constructor
     }
 
-    public Location(double latitude, double longitude, String address) {
-        this.latitude = latitude;
-        this.longitude = longitude;
+    public Location(String city, String address) {
+        this.city = city;
         this.address = address;
     }
 
-    public Location(double v, double v1) {
-        this.latitude = v;
-        this.longitude = v1;
+    public Location(String city) {
+        this.city = city;
     }
 
     // Getters
-    public double getLatitude() {
-        return latitude;
-    }
-
-    public double getLongitude() {
-        return longitude;
+    public String getCity() {
+        return city;
     }
 
     public String getAddress() {
@@ -35,12 +28,8 @@ public class Location {
     }
 
     // Setters
-    public void setLatitude(double latitude) {
-        this.latitude = latitude;
-    }
-
-    public void setLongitude(double longitude) {
-        this.longitude = longitude;
+    public void setCity(String city) {
+        this.city = city;
     }
 
     public void setAddress(String address) {

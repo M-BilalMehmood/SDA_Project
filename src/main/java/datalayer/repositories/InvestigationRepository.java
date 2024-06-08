@@ -22,8 +22,8 @@ public class InvestigationRepository {
              PreparedStatement pstmt = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
 
             pstmt.setString(1, investigation.getStatus());
-            pstmt.setInt(2, investigation.getCrimeCase().getCaseId()); // Assuming you have the Case object
-            pstmt.setString(3, investigation.getAssignedOfficer().getUsername()); // Assuming assignedOfficer is a User
+            pstmt.setInt(2, investigation.getCrimeCase().getCaseId());
+            pstmt.setString(3, investigation.getAssignedOfficer().getUsername());
 
             int affectedRows = pstmt.executeUpdate();
 
@@ -49,14 +49,13 @@ public class InvestigationRepository {
 
             while (rs.next()) {
                 Investigation investigation = new Investigation();
-                investigation.setInvestigationId(rs.getInt("investigation_id"));
+                investigation.setInvestigationId(rs.getInt("investigationId"));
                 investigation.setStatus(rs.getString("status"));
 
                 int caseId = rs.getInt("case_id");
                 Case crimeCase = new CaseRepository().findById(caseId); // Fetch Case using its repository
                 investigation.setCrimeCase(crimeCase);
 
-                // Retrieve assigned officer (User)
                 String assignedOfficerUsername = rs.getString("assigned_officer_username");
                 CaseOfficer assignedOfficer = new UserRepository().findOfficerByUsername(assignedOfficerUsername); // Fetch User
                 investigation.setAssignedOfficer(assignedOfficer);
@@ -72,13 +71,13 @@ public class InvestigationRepository {
 
     public void update(Investigation investigation) {
         String sql = "UPDATE investigations SET status = ?, assigned_officer_username = ? " +
-                "WHERE investigation_id = ?";
+                "WHERE investigationId = ?";
 
         try (Connection conn = DriverManager.getConnection(url, user, password);
              PreparedStatement pstmt = conn.prepareStatement(sql)) {
 
             pstmt.setString(1, investigation.getStatus());
-            pstmt.setString(2, investigation.getAssignedOfficer().getUsername()); // Assuming you have the User object
+            pstmt.setString(2, investigation.getAssignedOfficer().getUsername());
             pstmt.setInt(3, investigation.getInvestigationId());
 
             pstmt.executeUpdate();
@@ -88,7 +87,7 @@ public class InvestigationRepository {
     }
 
     public void delete(int investigationId) {
-        String sql = "DELETE FROM investigations WHERE investigation_id = ?";
+        String sql = "DELETE FROM investigations WHERE investigationId = ?";
 
         try (Connection conn = DriverManager.getConnection(url, user, password);
              PreparedStatement pstmt = conn.prepareStatement(sql)) {
@@ -101,7 +100,7 @@ public class InvestigationRepository {
     }
 
     public Investigation findById(int investigationId) {
-        String sql = "SELECT * FROM investigations WHERE investigation_id = ?";
+        String sql = "SELECT * FROM investigations WHERE investigationId = ?";
         Investigation investigation = null;
 
         try (Connection conn = DriverManager.getConnection(url, user, password);
@@ -112,14 +111,13 @@ public class InvestigationRepository {
             try (ResultSet rs = pstmt.executeQuery()) {
                 if (rs.next()) {
                     investigation = new Investigation();
-                    investigation.setInvestigationId(rs.getInt("investigation_id"));
+                    investigation.setInvestigationId(rs.getInt("investigationId"));
                     investigation.setStatus(rs.getString("status"));
 
                     int caseId = rs.getInt("case_id");
                     Case crimeCase = new CaseRepository().findById(caseId); // Fetch Case using its repository
                     investigation.setCrimeCase(crimeCase);
 
-                    // Retrieve assigned officer (User)
                     String assignedOfficerUsername = rs.getString("assigned_officer_username");
                     CaseOfficer assignedOfficer = new UserRepository().findOfficerByUsername(assignedOfficerUsername); // Fetch User
                     investigation.setAssignedOfficer(assignedOfficer);

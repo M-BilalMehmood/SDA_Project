@@ -3,20 +3,21 @@ package buisness.models;
 public class User {
     private String username;
     private String password;
-    private UserRole role;
-    private ContactInformation contactInformation;
+    private String email;
+    private String phoneNumber;
+    private static UserRole role;
 
     // Constructors
     public User() {
         // Default constructor
     }
 
-    public User(String username, String password, UserRole role, ContactInformation contactInformation) {
+    public User(String username, String password, UserRole role, String email, String phoneNumber) {
         this.username = username;
         this.password = password;
         this.role = role;
-        this.contactInformation = contactInformation;
-        // Initialize other common attributes here
+        this.email = email;
+        this.phoneNumber = phoneNumber;
     }
 
     public User(String username, String password, UserRole role) {
@@ -35,12 +36,16 @@ public class User {
         return password;
     }
 
-    public UserRole getRole() {
+    public static UserRole getRole() {
         return role;
     }
 
-    public ContactInformation getContactInformation() {
-        return contactInformation;
+    public String getEmail() {
+        return email;
+    }
+
+    public String getPhoneNumber() {
+        return phoneNumber;
     }
 
     // Setters
@@ -56,7 +61,11 @@ public class User {
         this.role = role;
     }
 
-    public void setContactInformation(ContactInformation contactInformation) {
-        this.contactInformation = contactInformation;
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public void setPhoneNumber(String phoneNumber) {
+        this.phoneNumber = phoneNumber;
     }
 }

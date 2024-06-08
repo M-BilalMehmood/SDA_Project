@@ -7,13 +7,15 @@
 <?import java.lang.String?>
 
 <VBox fx:controller="cbcrs.presentation.controllers.ReportIncidentController" xmlns:fx="http://javafx.com/fxml" prefHeight="890.0" prefWidth="460.0" spacing="20" style="-fx-font-family: Arial; -fx-background-color: #f4f4f4; -fx-padding: 20px;">
-    <Label text="Report Incident" style="-fx-font-size: 24px; -fx-font-weight: bold; -fx-text-fill: #333;"/>
+    <Label text="Report Incident" style="-fx-font-size: 30px; -fx-font-weight: bold; -fx-text-fill: #333;"/>
     <GridPane hgap="10" vgap="10" VBox.vgrow="ALWAYS">
-        <Label text="Name:" GridPane.columnIndex="0" GridPane.rowIndex="1" style="-fx-font-size: 14px;"/>
-        <TextField fx:id="nameField" promptText="Name" GridPane.columnIndex="1" GridPane.rowIndex="1" style="-fx-background-color: white; -fx-pref-width: 200px; -fx-font-size: 16px;"/>
-
-        <Label text="Incident Type:" GridPane.columnIndex="0" GridPane.rowIndex="0" style="-fx-font-size: 16px;"/>
-        <ComboBox fx:id="incidentTypeComboBox" GridPane.columnIndex="1" GridPane.rowIndex="0" prefWidth="300" style="-fx-font-size: 14px;">
+        <!-- Add the HBox here -->
+        <Label text="Report Anonymously:" GridPane.columnIndex="0" GridPane.rowIndex="0" style="-fx-font-size: 16px;"/>
+        <HBox alignment="CENTER_LEFT" spacing="10" GridPane.columnIndex="1" GridPane.rowIndex="0">
+            <CheckBox fx:id="anonymousCheckBox" />
+        </HBox>
+        <Label text="Incident Type:" GridPane.columnIndex="0" GridPane.rowIndex="1" style="-fx-font-size: 16px;"/>
+        <ComboBox fx:id="incidentTypeComboBox" GridPane.columnIndex="1" GridPane.rowIndex="1" prefWidth="300" style="-fx-font-size: 14px;">
             <items>
                 <FXCollections fx:factory="observableArrayList">
                     <String fx:value="THEFT"/>
@@ -25,11 +27,14 @@
             </items>
         </ComboBox>
 
-        <Label text="Description:" GridPane.columnIndex="0" GridPane.rowIndex="2" style="-fx-font-size: 16px;"/>
-        <TextArea fx:id="descriptionField" promptText="Description" GridPane.columnIndex="1" GridPane.rowIndex="2" prefHeight="200" style="-fx-background-color: white; -fx-pref-width: 200px; -fx-font-size: 14px;"/>
+        <Label text="Name:" GridPane.columnIndex="0" GridPane.rowIndex="2" style="-fx-font-size: 14px;"/>
+        <TextField fx:id="nameField" promptText="Name" GridPane.columnIndex="1" GridPane.rowIndex="2" style="-fx-background-color: white; -fx-pref-width: 200px; -fx-font-size: 16px;"/>
 
-        <Label text="Location:" GridPane.columnIndex="0" GridPane.rowIndex="3" style="-fx-font-size: 16px;"/>
-        <TextField fx:id="locationField" promptText="Location" GridPane.columnIndex="1" GridPane.rowIndex="3" style="-fx-background-color: white; -fx-pref-width: 200px; -fx-font-size: 14px;"/>
+        <Label text="Description:" GridPane.columnIndex="0" GridPane.rowIndex="3" style="-fx-font-size: 16px;"/>
+        <TextArea fx:id="descriptionField" promptText="Description" GridPane.columnIndex="1" GridPane.rowIndex="3" prefHeight="100" style="-fx-background-color: white; -fx-pref-width: 200px; -fx-font-size: 14px;"/>
+
+        <Label text="Location:" GridPane.columnIndex="0" GridPane.rowIndex="4" style="-fx-font-size: 16px;"/>
+        <TextField fx:id="locationField" promptText="Location" GridPane.columnIndex="1" GridPane.rowIndex="4" style="-fx-background-color: white; -fx-pref-width: 200px; -fx-font-size: 14px;"/>
     </GridPane>
 
     <Button fx:id="uploadImageButton" text="Upload Image" style="-fx-text-fill: white; -fx-background-color: #007bff; -fx-background-radius: 20; -fx-font-size: 14px;" VBox.vgrow="NEVER"/>
@@ -42,7 +47,7 @@
     <HBox fx:id="bottomHBox" spacing="5" alignment="CENTER" style="-fx-background-color: #f4f4f4;" VBox.vgrow="NEVER">
         <Button fx:id="homeButton" text="Home" onAction="#handleHomeButton" style="-fx-background-color: #cccccc; -fx-text-fill: black; -fx-font-size: 15px; -fx-padding: 5px; -fx-min-width: 100px; -fx-min-height: 40px;"/>
         <Button fx:id="reportIncidentButton" text="Report Incident" onAction="#handleReportIncidentButton" style="-fx-background-color: #007bff; -fx-text-fill: white; -fx-font-size: 15px; -fx-padding: 5px; -fx-min-width: 100px; -fx-min-height: 40px;"/>
-        <Button fx:id="contactsButton" text="Community" onAction="#handleContactsButton" style="-fx-background-color: #cccccc; -fx-text-fill: black; -fx-font-size: 15px; -fx-padding: 5px; -fx-min-width: 100px; -fx-min-height: 40px;"/>
+        <Button fx:id="contactsButton" text="Status" onAction="#handleContactsButton" style="-fx-background-color: #cccccc; -fx-text-fill: black; -fx-font-size: 15px; -fx-padding: 5px; -fx-min-width: 100px; -fx-min-height: 40px;"/>
         <Button fx:id="moreButton" text="More" onAction="#handleMoreButton" style="-fx-background-color: #cccccc; -fx-text-fill: black; -fx-font-size: 15px; -fx-padding: 5px; -fx-min-width: 100px; -fx-min-height: 40px;"/>
     </HBox>
 </VBox>

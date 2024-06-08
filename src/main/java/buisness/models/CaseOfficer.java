@@ -9,9 +9,8 @@ public class CaseOfficer extends User {
         // Default constructor
     }
 
-    public CaseOfficer(String username, String password, UserRole role, ContactInformation contactInformation,
-                       String badgeNumber, String rank) {
-        super(username, password, role, contactInformation);
+    public CaseOfficer(String username, String password, UserRole role, String email, String phoneNumber, String badgeNumber, String rank) {
+        super(username, password, role, email, phoneNumber);
         this.badgeNumber = badgeNumber;
         this.rank = rank;
     }

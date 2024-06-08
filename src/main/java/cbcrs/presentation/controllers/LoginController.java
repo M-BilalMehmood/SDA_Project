@@ -1,6 +1,8 @@
 package cbcrs.presentation.controllers;
 
+import buisness.models.Incident;
 import buisness.models.User;
+import buisness.services.IncidentService;
 import buisness.services.UserService;
 import cbcrs.presentation.HelloApplication;
 import javafx.event.ActionEvent;
@@ -41,6 +43,7 @@ public class LoginController {
         if (user != null) {
             // Login successful - navigate to the main application or dashboard
             System.out.println("Login successful!");
+            IncidentService.setCurrentUser(user);
             try {
                 // Load the Home-view.fxml
                 FXMLLoader loader = new FXMLLoader(getClass().getResource("/cbcrs/presentation/Home-view.fxml"));

@@ -9,11 +9,9 @@ public class Citizen extends User {
         // Default constructor
     }
 
-    public Citizen(String username, String password, UserRole role, ContactInformation contactInformation,
-                   String address, String communityInvolvement) {
-        super(username, password, role, contactInformation);
+    public Citizen(String username, String password, UserRole role, String email, String phoneNumber, String address) {
+        super(username, password, role, email, phoneNumber);
         this.address = address;
-        this.communityInvolvement = communityInvolvement;
     }
 
     // Getters

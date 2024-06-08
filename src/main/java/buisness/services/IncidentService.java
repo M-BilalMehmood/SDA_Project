@@ -3,23 +3,25 @@ package buisness.services;
 import buisness.models.*;
 import datalayer.repositories.IncidentRepository;
 
+import java.util.ArrayList;
 import java.util.List;
 
 // CrimeReportService.java
 public class IncidentService {
     private IncidentRepository incidentRepository;
+    public static User currentUser;
 
     public IncidentService(IncidentRepository incidentRepository) {
         this.incidentRepository = incidentRepository;
     }
 
-    public Incident createCrimeReport(String description, Location location, CaseCategory category, Citizen citizen, Evidence evidence) {
+    public Incident createCrimeReport(String description, String location, CaseCategory category, Citizen citizen, Evidence evidence) {
         Incident report = new Incident(description, location, category, citizen, evidence);
         incidentRepository.save(report);
         return report;
     }
 
-    public Incident createCrimeReportAnonymously(String description, Location location, CaseCategory category, Evidence evidence) {
+    public Incident createCrimeReportAnonymously(String description, String location, CaseCategory category, Evidence evidence) {
         Incident report = new Incident(description, location, category, evidence);
         incidentRepository.save(report);
         return report;
@@ -52,5 +54,26 @@ public class IncidentService {
         // 3. Return the list of recent incidents
         return allReports;
     }
-    // ... (other CRUD operations and business logic related to CrimeReports)
+
+    // In CrimeReportService.java
+    public List<Incident> getIncidentsForCurrentUser() {
+        // 1. Get the currently logged-in user (you'll need to manage user sessions)
+        User currentUser = getCurrentUser(); // Implement this method to get the logged-in user
+
+        // 2. Fetch incidents reported by the current user from the database
+        if (currentUser != null) {
+            return IncidentRepository.findByReporterUsername(currentUser.getUsername()); // Implement this method in your repository
+        } else {
+            // Handle the case where there's no logged-in user (e.g., return an empty list)
+            return new ArrayList<>();
+        }
+    }
+
+    public static void setCurrentUser(User user) {
+        currentUser = user;
+    }
+
+    public static Citizen getCurrentUser() {
+        return (Citizen) currentUser;
+    }
 }

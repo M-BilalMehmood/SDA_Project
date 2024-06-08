@@ -1,3 +1,4 @@
+
 package buisness.services;
 
 import buisness.models.User;
@@ -45,7 +46,6 @@ public class UserService {
     }
 
     public User loginUser(String username, String password) {
-        // 1. Retrieve user from the database
         User user = userRepository.findByUsername(username);
 
         // 2. Verify password (use the same hashing algorithm as in registration)
