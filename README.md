@@ -1,4 +1,4 @@
-# SENTINEL - Community-Based Crime Reporting System
+# SENTINEL - Community Based Crime Reporting System
 
 ## Introduction
 
