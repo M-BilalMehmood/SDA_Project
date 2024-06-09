@@ -43,7 +43,7 @@ public class LoginController {
         if (user != null) {
             // Login successful - navigate to the main application or dashboard
             System.out.println("Login successful!");
-            IncidentService.setCurrentUser(user);
+            //IncidentService.setCurrentUser(user);
             try {
                 // Load the Home-view.fxml
                 FXMLLoader loader = new FXMLLoader(getClass().getResource("/cbcrs/presentation/Home-view.fxml"));

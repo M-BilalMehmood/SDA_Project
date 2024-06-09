@@ -8,6 +8,7 @@ import org.mindrot.jbcrypt.BCrypt;
 
 public class UserService {
     private UserRepository userRepository;
+    private User currentUser;
 
     public UserService() {
         this.userRepository = new UserRepository();
@@ -54,6 +55,14 @@ public class UserService {
         } else {
             return null;
         }
+    }
+
+    public void setCurrentUser(User user) {
+        this.currentUser = user;
+    }
+
+    public User getCurrentUser() {
+        return this.currentUser;
     }
 
     // In UserService.java

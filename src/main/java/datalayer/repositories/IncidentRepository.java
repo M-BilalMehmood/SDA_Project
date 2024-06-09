@@ -3,7 +3,6 @@ package datalayer.repositories;
 import buisness.models.Incident;
 
 import java.sql.*;
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -27,6 +26,7 @@ public class IncidentRepository {
                     report.setIncidentId(rs.getInt("incidentId"));
                     report.setDescription(rs.getString("description"));
                     report.setLocation(rs.getString("location")); // Changed to location
+                    report.setDateTime(rs.getTimestamp("dateTime").toLocalDateTime());
                     report.setCategory(buisness.models.CaseCategory.valueOf(rs.getString("category")));
                     report.setStatus(rs.getString("status"));
 
@@ -71,12 +71,8 @@ public class IncidentRepository {
              PreparedStatement pstmt = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
 
             pstmt.setString(1, report.getDescription());
-            pstmt.setString(2, report.getLocation());
-
-            // Concatenate date and time into a single string
-            String dateTimeString = report.getDateTime().toString();
-
-            pstmt.setString(3, dateTimeString); // Insert the concatenated string
+            pstmt.setString(2, report.getLocation()); // Changed to location
+            pstmt.setTimestamp(3, Timestamp.valueOf(report.getDateTime()));
             pstmt.setString(4, report.getCategory().toString());
             pstmt.setString(5, report.getReporter().getUsername());
             pstmt.setInt(6, report.getEvidence() != null ? report.getEvidence().getEvidenceId() : 0);
@@ -96,7 +92,6 @@ public class IncidentRepository {
         }
     }
 
-
     public Incident findById(int incidentId) {
         String sql = "SELECT * FROM incidents WHERE incidentId = ?";
         Incident report = null;
@@ -112,6 +107,7 @@ public class IncidentRepository {
                     report.setIncidentId(rs.getInt("incidentId"));
                     report.setDescription(rs.getString("description"));
                     report.setLocation(rs.getString("location")); // Changed to location
+                    report.setDateTime(rs.getTimestamp("dateTime").toLocalDateTime());
                     report.setCategory(buisness.models.CaseCategory.valueOf(rs.getString("category")));
                     report.setStatus(rs.getString("status"));
 
@@ -141,6 +137,7 @@ public class IncidentRepository {
                 report.setIncidentId(rs.getInt("incidentId"));
                 report.setDescription(rs.getString("description"));
                 report.setLocation(rs.getString("location")); // Changed to location
+                report.setDateTime(rs.getTimestamp("dateTime").toLocalDateTime());
                 report.setCategory(buisness.models.CaseCategory.valueOf(rs.getString("category")));
                 report.setStatus(rs.getString("status"));
 

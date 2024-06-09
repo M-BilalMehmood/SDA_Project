@@ -1,6 +1,7 @@
 package cbcrs.presentation.controllers;
 
 import buisness.models.*;
+import datalayer.repositories.EvidenceRepository;
 import datalayer.repositories.IncidentRepository;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -15,15 +16,18 @@ import javafx.stage.Stage;
 
 import java.io.File;
 import java.io.IOException;
-
-import static buisness.services.IncidentService.currentUser;
+import java.time.LocalDateTime;
+import java.util.Locale;
 import static buisness.services.IncidentService.getCurrentUser;
 
 public class ReportIncidentController {
 
-    public HBox bottomHBox;
-    public CheckBox anonymousCheckBox;
-    public ComboBox incidentTypeComboBox;
+    @FXML
+    private HBox bottomHBox;
+    @FXML
+    private CheckBox anonymousCheckBox;
+    @FXML
+    private ComboBox<String> incidentTypeComboBox;
     @FXML
     private TextField nameField;
     @FXML
@@ -36,19 +40,27 @@ public class ReportIncidentController {
     private TextField locationField;
     @FXML
     private Button submitButton;
+    @FXML
+    private Label uploadStatusLabel;
+
+    private IncidentRepository incidentRepository = new IncidentRepository();
+    private EvidenceRepository evidenceRepository = new EvidenceRepository();
 
     @FXML
     public void initialize() {
         uploadImageButton.setOnAction(this::handleUploadImage);
         uploadVoiceButton.setOnAction(this::handleUploadVoice);
         submitButton.setOnAction(this::handleSubmit);
+
+        // Set items for the incident type combo box
+        incidentTypeComboBox.getItems().addAll("THEFT", "ASSAULT", "VANDALISM", "RAPE", "OTHERS");
     }
 
     private void handleUploadImage(ActionEvent event) {
         FileChooser fileChooser = new FileChooser();
         File file = fileChooser.showOpenDialog(null);
         if (file != null) {
-            // Handle the image file...
+            uploadStatusLabel.setText("Image uploaded: " + file.getAbsolutePath());
         }
     }
 
@@ -56,27 +68,24 @@ public class ReportIncidentController {
         FileChooser fileChooser = new FileChooser();
         File file = fileChooser.showOpenDialog(null);
         if (file != null) {
-            // Handle the voice file...
+            uploadStatusLabel.setText("Voice message uploaded: " + file.getAbsolutePath());
         }
     }
 
     private void handleSubmit(ActionEvent event) {
-        String incidentType = incidentTypeComboBox.getValue().toString();
+        String incidentType = incidentTypeComboBox.getValue(); // Get selected incident type
         String name = nameField.getText();
         String location = locationField.getText();
         String description = descriptionField.getText();
 
-        if (incidentType.isEmpty() || name.isEmpty() || location.isEmpty() || description.isEmpty()) {
-            Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setTitle("Error");
-            alert.setHeaderText(null);
-            alert.setContentText("Please fill in all the required fields.");
-            alert.showAndWait();
+        if (incidentType == null || name.isEmpty() || location.isEmpty() || description.isEmpty()) {
+            showAlert("Error", "Please fill in all the required fields.");
         } else {
             // Create a new Incident object
             Incident newIncident = new Incident();
             newIncident.setDescription(description);
-            newIncident.setCategory(CaseCategory.valueOf(incidentType));
+            newIncident.setCategory(CaseCategory.valueOf(incidentTypeComboBox.getValue().toString())); // Assuming Category is your enum
+            newIncident.setDateTime(LocalDateTime.now());
             newIncident.setStatus("Pending");
             newIncident.setLocation(String.valueOf(locationField));
             if (anonymousCheckBox.isSelected()) {
@@ -85,29 +94,49 @@ public class ReportIncidentController {
                 newIncident.setReporter(getCurrentUser());
             }
 
-            newIncident.setEvidence(new Evidence());
-            newIncident.getEvidence().setEvidenceId(IncidentRepository.getLastEvidenceId() + 1);
-
-            //newIncident.setCategory(CaseCategory.valueOf(incidentType));
-
-            IncidentRepository incidentRepository = new IncidentRepository();
+            // Save the incident first
             incidentRepository.save(newIncident);
 
+            // Now create and save Evidence (if needed)
+            String evidenceDescription = descriptionField.getText();
+            String evidenceFilePath = uploadStatusLabel.getText().replace("Image uploaded: ", "").replace("Voice message uploaded: ", "").trim();
+
+            if (!evidenceDescription.isEmpty() || !evidenceFilePath.isEmpty()) {
+                Evidence evidence = new Evidence();
+                evidence.setDescription(evidenceDescription);
+                evidence.setFilePath(evidenceFilePath);
+                evidence.setIncident(newIncident); // Associate with the saved incident
+                evidenceRepository.save(evidence);
+            }
+
             // Show a success message
-            Alert alert = new Alert(Alert.AlertType.INFORMATION);
-            alert.setTitle("Success");
-            alert.setHeaderText(null);
-            alert.setContentText("Incident report submitted successfully.");
-            alert.showAndWait();
+            showAlert("Success", "Incident report submitted successfully.");
 
             // Clear the form fields
-            //incidentTypeField.clear();
+            incidentTypeComboBox.getSelectionModel().clearSelection();
             nameField.clear();
             locationField.clear();
             descriptionField.clear();
+            uploadStatusLabel.setText("");
         }
     }
 
+
+    private void showAlert(String title, String message) {
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setTitle(title);
+        alert.setHeaderText(null);
+        alert.setContentText(message);
+        alert.showAndWait();
+    }
+    @FXML
+    private Button homeButton; // Add fx:id for the Home button
+    @FXML
+    private Button reportIncidentButton; // Add fx:id for the Report Incident button
+    @FXML
+    private Button contactsButton; // Add fx:id for the Contacts button
+    @FXML
+    private Button moreButton; // Add fx:id for the More button
 
     public void handleHomeButton(ActionEvent actionEvent) {
         try {

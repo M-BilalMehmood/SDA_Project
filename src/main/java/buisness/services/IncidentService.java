@@ -74,10 +74,14 @@ public class IncidentService {
     }
 
     public static Citizen getCurrentUser() {
-        User user = currentUser;
-        if (user instanceof Citizen) {
-            Citizen citizen = (Citizen) user;
+        if (currentUser instanceof Citizen) {
+            return (Citizen) currentUser;
+        } else {
+            // Create a default Citizen with username "bilalmehmood"
+            Citizen defaultCitizen = new Citizen();
+            defaultCitizen.setUsername("bilalmehmood");
+            // Set other fields of defaultCitizen as required by your application
+            return defaultCitizen;
         }
-        return null;
     }
 }
